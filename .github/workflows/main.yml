@@ -1,4 +1,3 @@
-# workflow名称。省略的话，默认为当前workflow文件名
 name: Node.js CI
 # 触发workflow的条件，
 on:
