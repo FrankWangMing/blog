@@ -2,9 +2,9 @@ FROM node:18-alpine as builder
 # WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
+RUN npm install -g npm
 RUN npm install
-COPY . .
-CMD [ "npm", "run", "build" ]
+RUN npm run build
 
 # 指定基础镜像，必须为第一个命令
 FROM nginx 
