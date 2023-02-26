@@ -1,16 +1,15 @@
-# FROM node:18-alpine
+FROM node:18-alpine as builder
 # WORKDIR /app
-# COPY package.json .
-# COPY package-lock.json .
-# RUN npm install
-# COPY . .
-# EXPOSE 80
-# CMD [ "npm", "run", "dev" ]
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+COPY . .
+CMD [ "npm", "run", "build" ]
 
 # 指定基础镜像，必须为第一个命令
-FROM nginx
+FROM nginx 
 # 复制构建文件到容器中
-COPY ./dist/ /usr/share/nginx/html/
+COPY --FROM=builder ./dist/ /usr/share/nginx/html/
 # 复制nginx配置到容器中
 COPY ./nginx.conf /etc/nginx/conf.d/nginx.conf
 # 指定端口
